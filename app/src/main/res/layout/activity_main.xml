@@ -15,6 +15,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="1"
-        tools:listitem="@layout/animal_view" />
+        tools:listitem="@layout/news_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

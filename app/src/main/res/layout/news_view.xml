@@ -19,7 +19,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="monkey" />
+        tools:text="News" />
     
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -34,7 +34,7 @@
             android:layout_height="600dp">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imgAnimal"
+                android:id="@+id/news_image"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_300dp"
                 android:adjustViewBounds="true"
@@ -43,7 +43,7 @@
                 tools:src="@drawable/ic_launcher_background" />
 
             <TextView
-                android:id="@+id/animalHabitat"
+                android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10dp"
@@ -53,11 +53,11 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imgAnimal"
-                tools:text="monkey" />
+                app:layout_constraintTop_toBottomOf="@+id/news_image"
+                tools:text="Title" />
 
             <TextView
-                android:id="@+id/animalDiet"
+                android:id="@+id/description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10dp"
@@ -67,11 +67,11 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/animalHabitat"
-                tools:text="animal diet" />
+                app:layout_constraintTop_toBottomOf="@+id/title"
+                tools:text="Description" />
 
             <TextView
-                android:id="@+id/animalGeoRange"
+                android:id="@+id/author"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10dp"
@@ -81,8 +81,8 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/animalDiet"
-                tools:text="Africa" />
+                app:layout_constraintTop_toBottomOf="@+id/description"
+                tools:text="Author" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

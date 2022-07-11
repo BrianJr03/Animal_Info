@@ -2,56 +2,49 @@ package jr.brian.volley
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.android.volley.Request
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import jr.brian.volley.Constants.BASE_URL
-import jr.brian.volley.Constants.MULTI_ANIMAL_END_POINT
-import jr.brian.volley.adapter.AnimalAdapter
-import jr.brian.volley.data.AnimalsResponse
+import jr.brian.volley.view.adapter.NewsAdapter
+import jr.brian.volley.model.remote.Current
 import jr.brian.volley.databinding.ActivityMainBinding
+import jr.brian.volley.model.remote.VolleyHelper
+import jr.brian.volley.presenter.CurrentMVP
+import jr.brian.volley.presenter.CurrentPresenter
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), CurrentMVP.CurrentView {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var presenter: CurrentPresenter
+    private lateinit var currentList: ArrayList<Current>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        getMultiAnimals()
+        init()
     }
 
-    private fun getMultiAnimals() {
-        val requestQueue = Volley.newRequestQueue(this)
-        val request = StringRequest(
-            Request.Method.GET,
-            BASE_URL + MULTI_ANIMAL_END_POINT,
-            { apiResponse: String ->
-                val typeToken = object : TypeToken<AnimalsResponse>() {}
-                val gson = Gson()
-                try {
-                    val animalResponse: AnimalsResponse = gson.fromJson(apiResponse, typeToken.type)
-                    initMultiAnimalData(animalResponse)
-                    Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            },
-            { error -> error.printStackTrace() }
-        )
-        requestQueue.add(request)
+    private fun init() {
+        currentList = ArrayList()
+        presenter = CurrentPresenter(VolleyHelper(this), this)
+        presenter.getCategories()
     }
 
     @SuppressLint("SetTextI18n")
-    private fun initMultiAnimalData(animalResponse: AnimalsResponse) {
+    private fun setAdapter(current: Current) {
         binding.recyclerView.layoutManager =
             LinearLayoutManager(this)
-        val animalAdapter = AnimalAdapter(this, animalResponse)
-        binding.recyclerView.adapter = animalAdapter
+        val newsAdapter = NewsAdapter(this, current.news)
+        binding.recyclerView.adapter = newsAdapter
+    }
+
+    override fun setResult(current: Current?) {
+        if (current != null) {
+            setAdapter(current)
+        } else {
+            setAdapter(Current(ArrayList(), ""))
+        }
+    }
+
+    override fun onLoad(isLoading: Boolean) {
     }
 }
